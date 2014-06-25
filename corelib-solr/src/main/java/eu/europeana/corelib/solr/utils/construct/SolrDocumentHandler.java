@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 
 /**
@@ -83,7 +84,7 @@ public class SolrDocumentHandler implements ICollection{
 
     @Override
     public void insertDocument(IDocument document) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        save((FullBeanImpl) document);
     }
 
 
@@ -99,11 +100,17 @@ public class SolrDocumentHandler implements ICollection{
 
     @Override
     public void deleteDocument(IDocument id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            solrServer.deleteById(ClientUtils.escapeQueryChars(id.getId()));
+        } catch (SolrServerException ex) {
+            Logger.getLogger(SolrDocumentHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SolrDocumentHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void commit() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       solrServer.commit();
     }
 }

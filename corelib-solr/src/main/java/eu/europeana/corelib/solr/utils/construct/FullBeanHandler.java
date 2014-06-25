@@ -100,6 +100,48 @@ public class FullBeanHandler implements ICollection {
         return false;
     }
 
+    public boolean removeRecord(FullBeanImpl fullBean) {
+      
+
+            DBCollection records = mongoServer.getDatastore().getDB()
+                    .getCollection("record");
+            DBCollection proxies = mongoServer.getDatastore().getDB()
+                    .getCollection("Proxy");
+            DBCollection providedCHOs = mongoServer.getDatastore().getDB()
+                    .getCollection("ProvidedCHO");
+            DBCollection aggregations = mongoServer.getDatastore().getDB()
+                    .getCollection("Aggregation");
+            DBCollection europeanaAggregations = mongoServer.getDatastore()
+                    .getDB().getCollection("EuropeanaAggregation");
+            DBCollection physicalThing = mongoServer.getDatastore().getDB()
+                    .getCollection("PhysicalThing");
+            DBObject query = new BasicDBObject("about", fullBean.getAbout());
+            DBObject proxyQuery = new BasicDBObject("about", "/proxy/provider"
+                    + fullBean.getAbout());
+            DBObject europeanaProxyQuery = new BasicDBObject("about",
+                    "/proxy/europeana"
+                    + fullBean.getAbout());
+
+            DBObject providedCHOQuery = new BasicDBObject("about", "/item"
+                    + fullBean.getAbout());
+            DBObject aggregationQuery = new BasicDBObject("about",
+                    "/aggregation/provider"
+                    + fullBean.getAbout());
+            DBObject europeanaAggregationQuery = new BasicDBObject("about",
+                    "/aggregation/europeana"
+                    + fullBean.getAbout());
+            europeanaAggregations.remove(europeanaAggregationQuery,
+                    WriteConcern.FSYNC_SAFE);
+            records.remove(query, WriteConcern.FSYNC_SAFE);
+            proxies.remove(europeanaProxyQuery, WriteConcern.FSYNC_SAFE);
+            proxies.remove(proxyQuery, WriteConcern.FSYNC_SAFE);
+            physicalThing.remove(europeanaProxyQuery, WriteConcern.FSYNC_SAFE);
+            physicalThing.remove(proxyQuery, WriteConcern.FSYNC_SAFE);
+            providedCHOs.remove(providedCHOQuery, WriteConcern.FSYNC_SAFE);
+            aggregations.remove(aggregationQuery, WriteConcern.FSYNC_SAFE);
+            return true;
+        
+    }
     public void clearData(String collection) {
         DBCollection records = mongoServer.getDatastore().getDB()
                 .getCollection("record");
@@ -323,17 +365,39 @@ public class FullBeanHandler implements ICollection {
 
     @Override
     public IDocument getDocumentById(IDocument id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        FullBeanImpl fullBean = (FullBeanImpl) id;
+         try {
+            return (FullBeanImpl) mongoServer.getFullBean(fullBean.getAbout());
+        } catch (MongoDBException e) {
+            log.log(Level.SEVERE, e.getMessage());
+        }
+        return null;
     }
 
     @Override
     public void insertDocument(IDocument document) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            saveEdmClasses((FullBeanImpl)document, true);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(FullBeanHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FullBeanHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(FullBeanHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void updateDocumentUsingId(IDocument document) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            updateFullBean((FullBeanImpl)document);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(FullBeanHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FullBeanHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(FullBeanHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -343,7 +407,7 @@ public class FullBeanHandler implements ICollection {
 
     @Override
     public void deleteDocument(IDocument id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        removeRecord((FullBeanImpl)id);
     }
 
     @Override
