@@ -272,7 +272,7 @@ public class EuropeanaIdMongoServerImpl implements MongoServer, EuropeanaIdMongo
     }
 
     @Override
-    public IDocument getDocumentById(String id) {
+    public IDocument getDocumentById(IDocument id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

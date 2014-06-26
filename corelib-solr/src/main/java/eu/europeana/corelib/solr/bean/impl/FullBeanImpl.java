@@ -117,6 +117,9 @@ public class FullBeanImpl implements FullBean, IDocument {
 
     @Indexed
     protected State state;
+    
+    protected String classType;
+    
 
     /**
      * GETTERS & SETTTERS
@@ -384,6 +387,49 @@ public class FullBeanImpl implements FullBean, IDocument {
 
     @Override
     public void setId(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+
+   
+    @Override
+    public void setClassType(String classType) {
+        this.classType = classType;
+    }
+
+    @Override
+    public String getClassType() {
+        return this.getClass().getName();
+    }
+    
+    @Override
+    public FullBeanImpl clone(){
+        FullBeanImpl fullBeanClone = new FullBeanImpl();
+        fullBeanClone.setEuropeanaId(this.europeanaId);
+        fullBeanClone.setAbout(this.getAbout());
+        fullBeanClone.setAgents(this.getAgents());
+        fullBeanClone.setAggregations(this.getAggregations());
+        fullBeanClone.setClassType(this.getClassType());
+        fullBeanClone.setConcepts(this.getConcepts());
+        fullBeanClone.setCountry(this.getCountry());
+        fullBeanClone.setEuropeanaAggregation(this.getEuropeanaAggregation());
+        fullBeanClone.setEuropeanaCollectionName(this.getEuropeanaCollectionName());
+        fullBeanClone.setEuropeanaCompleteness(this.getEuropeanaCompleteness());
+        fullBeanClone.setId(this.getId());
+        fullBeanClone.setLanguage(this.getLanguage());
+        fullBeanClone.setOptOut(this.optOut);
+        fullBeanClone.setPlaces(this.getPlaces());
+        fullBeanClone.setProvidedCHOs(this.getProvidedCHOs());
+        fullBeanClone.setProvider(this.getProvider());
+        fullBeanClone.setProvidedCHOs(this.getProvidedCHOs());
+        fullBeanClone.setProxies(this.getProxies());
+        fullBeanClone.setState(this.getState());
+        fullBeanClone.setTimespans(this.getTimespans());
+        fullBeanClone.setType(this.getType());
+        fullBeanClone.setTimestampCreated(this.getTimestampCreated());
+        fullBeanClone.setTimestampUpdated(this.getTimestampUpdated());
+        fullBeanClone.setTitle(this.getTitle());
+        fullBeanClone.setYear(this.getYear());
+        fullBeanClone.setUserTags(this.getUserTags());
+        return fullBeanClone;
     }
 }

@@ -141,7 +141,17 @@ public class EuropeanaId implements IDocument{
 
     @Override
     public void setId(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.newId = string;
     }
-	
+
+    @Override
+    public EuropeanaId clone(){
+        EuropeanaId europeanaId = new EuropeanaId();
+        europeanaId.setLastAccess(this.getLastAccess());
+        europeanaId.setNewId(this.getNewId());
+        europeanaId.setOldId(this.getOldId());
+        europeanaId.setState(this.getState());
+        europeanaId.setTimestamp(this.getTimestamp());
+        return europeanaId;
+    }
 }

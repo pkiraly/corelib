@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eu.europeana.corelib.publication;
 
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
@@ -26,22 +25,22 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
  *
  * @author Yorgos.Mamakis@ europeana.eu
  */
-public class CollectionBridge implements ICollection{
+public class CollectionBridge implements ICollection {
 
     @Resource
     EdmMongoServerImpl mongoServer;
-    
+
     @Resource
     EuropeanaIdMongoServerImpl europeanaIdServer;
-    
+
     @Resource
-    HttpSolrServer solrServer;
-    
+     HttpSolrServer solrServer;
+
     @Override
     public IDocument getDocumentById(IDocument id) {
 
-        for(ICollection collection : getCollectionHandlers(id.getClass())){
-           return collection.getDocumentById(id);
+        for (ICollection collection : getCollectionHandlers(id.getClassType(), id.getState())) {
+            return collection.getDocumentById(id);
         }
         return null;
 
@@ -49,44 +48,49 @@ public class CollectionBridge implements ICollection{
 
     @Override
     public void insertDocument(IDocument document) {
-        for(ICollection collection : getCollectionHandlers(document.getClass())){
+        for (ICollection collection : getCollectionHandlers(document.getClassType(), document.getState())) {
             collection.insertDocument(document);
         }
     }
 
-
     @Override
     public void updateDocumentUsingId(IDocument document) {
-        for(ICollection collection : getCollectionHandlers(document.getClass())){
+        for (ICollection collection : getCollectionHandlers(document.getClassType(), document.getState())) {
             collection.updateDocumentUsingId(document);
         }
     }
 
     @Override
     public void cloneDocument(IDocument originalDocument, IDocument clonedDocument) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       //
     }
-    
-        @Override
+
+    @Override
     public List<IDocument> getDocumentsByStatesUsingBatch(List<State> stateVlues,
             Map<String, List<String>> queryChoices, int batchSize) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    private  List<ICollection> getCollectionHandlers(Class<?> clazz){
+
+    private List<ICollection> getCollectionHandlers(String type, State state) {
         List<ICollection> collectionHandlers = new ArrayList<ICollection>();
-        if(clazz.isAssignableFrom(FullBeanImpl.class)){
-            collectionHandlers.add(new FullBeanHandler(mongoServer));
-            collectionHandlers.add(new SolrDocumentHandler(solrServer));
-        } else if(clazz.isAssignableFrom(EuropeanaId.class)) {
-            collectionHandlers.add(europeanaIdServer);
+        if (type.equals(FullBeanImpl.class.getName())) {
+            if (state == State.ACCEPTED || state == State.TO_BE_DELETED) {
+                collectionHandlers.add(new FullBeanHandler(mongoServer));
+            } else {
+                collectionHandlers.add(new FullBeanHandler(mongoServer));
+                collectionHandlers.add(new SolrDocumentHandler(solrServer));
+            }
+        } else if (type.equals((EuropeanaId.class).getName())) {
+            if (state == State.ACCEPTED || state == State.TO_BE_DELETED) {
+                collectionHandlers.add(europeanaIdServer);
+            }
         }
         return collectionHandlers;
     }
 
     @Override
     public void deleteDocument(IDocument id) {
-         for(ICollection collection : getCollectionHandlers(id.getClass())){
+        for (ICollection collection : getCollectionHandlers(id.getClassType(), id.getState())) {
             collection.deleteDocument(id);
         }
     }
