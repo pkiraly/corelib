@@ -21,6 +21,8 @@ import java.util.Map;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.code.morphia.annotations.Entity;
 
@@ -33,13 +35,16 @@ import eu.europeana.corelib.definitions.solr.entity.Proxy;
  * 
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
+@NodeEntity
 @Entity("Proxy")
 public class ProxyImpl extends BasicProxyImpl implements Proxy {
 
 	private DocType edmType;
 
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> year;
 
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> userTags;
 
 	private boolean europeanaProxy;

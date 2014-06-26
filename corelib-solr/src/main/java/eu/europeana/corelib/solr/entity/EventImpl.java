@@ -1,10 +1,13 @@
 package eu.europeana.corelib.solr.entity;
 
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
 import com.google.code.morphia.annotations.Entity;
 
 import eu.europeana.corelib.definitions.solr.entity.Event;
 import eu.europeana.corelib.utils.StringArrayUtils;
 
+@NodeEntity
 @Entity("Event")
 public class EventImpl extends ContextualClassImpl implements Event {
 

@@ -1,9 +1,11 @@
 package eu.europeana.corelib.solr.entity;
 
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
 import com.google.code.morphia.annotations.Entity;
 
 import eu.europeana.corelib.definitions.solr.entity.BasicProxy;
-
+@NodeEntity
 @Entity("BasicProxy")
 public class BasicProxyImpl extends PhysicalThingImpl implements BasicProxy {
 

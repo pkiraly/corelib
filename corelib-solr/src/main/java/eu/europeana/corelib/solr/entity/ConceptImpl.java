@@ -22,6 +22,8 @@ import java.util.Map;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.code.morphia.annotations.Entity;
 
@@ -34,6 +36,7 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  * @author Yorgos.Mamakis@ kb.nl
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
+@NodeEntity
 @Entity("Concept")
 public class ConceptImpl extends ContextualClassImpl implements Concept {
 
@@ -45,6 +48,7 @@ public class ConceptImpl extends ContextualClassImpl implements Concept {
 	private String[] exactMatch;
 	private String[] relatedMatch;
 	private String[] closeMatch;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> notation;
 	private String[] inScheme;
 

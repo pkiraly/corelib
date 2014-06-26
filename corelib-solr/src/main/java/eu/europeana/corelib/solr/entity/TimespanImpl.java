@@ -21,6 +21,8 @@ import java.util.Map;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.code.morphia.annotations.Entity;
 
@@ -32,13 +34,18 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  * @author Yorgos.Mamakis@ kb.nl
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
+@NodeEntity
 @Entity("Timespan")
 public class TimespanImpl extends ContextualClassImpl implements
 		eu.europeana.corelib.definitions.solr.entity.Timespan {
 
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> begin;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> end;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> isPartOf;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsHasPart;
 
 	private String[] owlSameAs;

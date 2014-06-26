@@ -3,8 +3,12 @@ package eu.europeana.corelib.solr.entity;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Transient;
+
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
@@ -14,20 +18,29 @@ import eu.europeana.corelib.definitions.solr.entity.WebResource;
 import eu.europeana.corelib.utils.StringArrayUtils;
 
 @JsonSerialize(include = Inclusion.NON_EMPTY)
+@NodeEntity(partial = true)
 @Entity("EuropeanaAggregation")
 public class EuropeanaAggregationImpl extends AbstractEdmEntityImpl implements EuropeanaAggregation {
-
+	@Transient
 	@Reference
 	private List<WebResource> webResources;
-
+	@GraphProperty
 	private String aggregatedCHO;
+	@GraphProperty
 	private String[] aggregates;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcCreator;
+	@GraphProperty
 	private String edmLandingPage;
+	@GraphProperty
 	private String edmIsShownBy;
+	@GraphProperty
 	private String[] edmHasView;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmCountry;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmLanguage;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmRights;
 	private String edmPreview ="";
 

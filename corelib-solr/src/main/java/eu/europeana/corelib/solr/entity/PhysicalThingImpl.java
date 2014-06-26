@@ -3,64 +3,117 @@ package eu.europeana.corelib.solr.entity;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
 import com.google.code.morphia.annotations.Entity;
 
 import eu.europeana.corelib.definitions.solr.entity.PhysicalThing;
 import eu.europeana.corelib.utils.StringArrayUtils;
-
+@NodeEntity
 @Entity("PhysicalThing")
 public class PhysicalThingImpl extends AbstractEdmEntityImpl implements PhysicalThing {
-
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcContributor;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcCoverage;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcCreator;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcDate;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcDescription;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcFormat;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcIdentifier;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcLanguage;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcPublisher;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcRelation;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcRights;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcSource;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcSubject;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcTitle;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcType;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsAlternative;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsConformsTo;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsCreated;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsExtent;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsHasFormat;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsHasPart;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsHasVersion;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIsFormatOf;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIsPartOf;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIsReferencedBy;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIsReplacedBy;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIsRequiredBy;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIssued;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIsVersionOf;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsMedium;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsProvenance;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsReferences;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsReplaces;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsRequires;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsSpatial;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsTOC;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsTemporal;
+	@GraphProperty
 	private String[] rdfType;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmHasMet;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmHasType;
+	@GraphProperty
 	private String[] edmIncorporates;
+	@GraphProperty
 	private String[] edmIsDerivativeOf;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmIsRelatedTo;
+	@GraphProperty
 	private String edmIsRepresentationOf;
+	@GraphProperty
 	private String[] edmIsSimilarTo;
+	@GraphProperty
 	private String[] edmIsSuccessorOf;
+	@GraphProperty
 	private String[] edmRealizes;
+	@GraphProperty
 	private String[] edmWasPresentAt;
+	@GraphProperty
 	private String edmCurrentLocation;
+	@GraphProperty
 	private String[] edmIsNextInSequence;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmRights;
 
 	@Override

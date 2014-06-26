@@ -18,9 +18,11 @@
 package eu.europeana.corelib.solr.entity;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import com.google.code.morphia.annotations.Id;
-import com.google.code.morphia.annotations.Indexed;
 
 import eu.europeana.corelib.definitions.solr.entity.AbstractEdmEntity;
 
@@ -29,14 +31,18 @@ import eu.europeana.corelib.definitions.solr.entity.AbstractEdmEntity;
  * 
  * @author Yorgos.Mamakis@ kb.nl
  */
+@NodeEntity
 public class AbstractEdmEntityImpl implements AbstractEdmEntity {
 
-	@Indexed(unique = true, dropDups=true)
+	@org.springframework.data.neo4j.annotation.Indexed(unique=true,indexType = IndexType.FULLTEXT, indexName = "edmsearch2")
+	@com.google.code.morphia.annotations.Indexed(unique = true, dropDups=true)
 	protected String about;
 
 	@Id
 	protected ObjectId id = new ObjectId();
 
+	@GraphId
+	protected Long neoID;
 	@Override
 	public ObjectId getId() {
 		return this.id;
@@ -55,5 +61,13 @@ public class AbstractEdmEntityImpl implements AbstractEdmEntity {
 	@Override
 	public void setAbout(String about) {
 		this.about = about;
+	}
+	
+	public Long getNeoID() {
+		return neoID;
+	}
+
+	public void setNeoID(Long neoID) {
+		this.neoID = neoID;
 	}
 }

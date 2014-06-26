@@ -3,14 +3,20 @@ package eu.europeana.corelib.solr.entity;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
 import eu.europeana.corelib.definitions.solr.entity.ContextualClass;
 
-
+@NodeEntity
 public class ContextualClassImpl extends AbstractEdmEntityImpl implements ContextualClass {
-	
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> prefLabel;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> altLabel;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> hiddenLabel;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> note;
 
 	@Override

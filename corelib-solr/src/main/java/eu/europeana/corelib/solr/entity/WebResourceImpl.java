@@ -22,10 +22,10 @@ import java.util.Map;
 import org.bson.types.ObjectId;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.code.morphia.annotations.Entity;
-import com.google.code.morphia.annotations.Id;
-import com.google.code.morphia.annotations.Indexed;
 
 import eu.europeana.corelib.definitions.solr.entity.WebResource;
 
@@ -35,25 +35,37 @@ import eu.europeana.corelib.definitions.solr.entity.WebResource;
  * @author Yorgos.Mamakis@ kb.nl
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
+@NodeEntity
 @Entity("WebResource")
-public class WebResourceImpl implements WebResource {
+public class WebResourceImpl extends AbstractEdmEntityImpl implements WebResource {
 
-	@Id
-	private ObjectId id = new ObjectId();
+//	@Id
+//	private ObjectId id = new ObjectId();
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> webResourceDcRights;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> webResourceEdmRights;
 
-	@Indexed(unique=false)
-	private String about;
+//	@Indexed(unique=false)
+//	private String about;
 
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcDescription;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcFormat;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcSource;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsExtent;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIssued;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsConformsTo;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsCreated;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsIsFormatOf;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dctermsHasPart;
 	private String isNextInSequence;
 

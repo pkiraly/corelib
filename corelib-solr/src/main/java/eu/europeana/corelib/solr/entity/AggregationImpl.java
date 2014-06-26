@@ -21,10 +21,11 @@ package eu.europeana.corelib.solr.entity;
 import java.util.List;
 import java.util.Map;
 
-
-
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
 //import org.springframework.data.neo4j.annotation.GraphProperty;
 //import org.springframework.data.neo4j.annotation.NodeEntity;
 import com.google.code.morphia.annotations.Entity;
@@ -33,7 +34,7 @@ import com.google.code.morphia.annotations.Reference;
 import eu.europeana.corelib.definitions.solr.entity.Aggregation;
 import eu.europeana.corelib.definitions.solr.entity.WebResource;
 import eu.europeana.corelib.utils.StringArrayUtils;
-//import javax.persistence.Transient;
+import javax.persistence.Transient;
 
 /**
  * @see eu.europeana.corelib.definitions.solr.entity.model.definitions.Aggregation
@@ -41,45 +42,45 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  * 
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
-//@NodeEntity(partial = true)
+@NodeEntity(partial = true)
 @Entity("Aggregation")
 public class AggregationImpl extends AbstractEdmEntityImpl implements Aggregation {
 
-//	@GraphProperty(propertyType = String.class)
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmDataProvider;
 	private String edmIsShownBy;
 	private String edmIsShownAt;
 	private String edmObject;
 	
-//	@GraphProperty(propertyType = String.class)
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmProvider;
 	
-//	@GraphProperty(propertyType = String.class)
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> edmRights;
 	
-//	@GraphProperty(defaultValue="")
+	@GraphProperty(defaultValue="")
 	private String edmUgc;
 	
-//	@GraphProperty(propertyType = String.class)
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcRights;
 	
-//	@GraphProperty(defaultValue="")
+	@GraphProperty(defaultValue="")
 	private String[] hasView;
 	
-//	@GraphProperty(defaultValue="")
+	@GraphProperty(defaultValue="")
 	private String aggregatedCHO;
 	
-//	@GraphProperty(defaultValue="")
+	@GraphProperty(defaultValue="")
 	private String[] aggregates;
 	
-//	@GraphProperty(defaultValue="")
+	@GraphProperty(defaultValue="")
 	private String[] edmUnstored;
 
-//	@Transient
+	@Transient
 	@Reference
 	private List<WebResourceImpl> webResources;
 
-//	@GraphProperty
+	@GraphProperty
 	private Boolean edmPreviewNoDistribute;
 
 	@Override

@@ -19,6 +19,8 @@ package eu.europeana.corelib.solr.entity;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.code.morphia.annotations.Entity;
 
@@ -31,9 +33,10 @@ import eu.europeana.corelib.definitions.solr.entity.ProvidedCHO;
  * @author Yorgos.Mamakis@ kb.nl
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
+@NodeEntity
 @Entity("ProvidedCHO")
 public class ProvidedCHOImpl extends AbstractEdmEntityImpl implements ProvidedCHO {
-
+	@GraphProperty(defaultValue="")
 	private String[] owlSameAs;
 
 	@Override

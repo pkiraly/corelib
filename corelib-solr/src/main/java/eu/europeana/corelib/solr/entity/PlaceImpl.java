@@ -22,6 +22,8 @@ import java.util.Map;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.code.morphia.annotations.Entity;
 
@@ -34,14 +36,17 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  * 
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
+@NodeEntity
 @Entity("Place")
 public class PlaceImpl extends ContextualClassImpl implements Place {
-
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> isPartOf;
 	private Float latitude;
 	private Float longitude;
 	private Float altitude;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,Float> position;
+	@GraphProperty(propertyType = String.class)
 	private Map<String,List<String>> dcTermsHasPart;
 	private String[] owlSameAs;
 
