@@ -39,6 +39,8 @@ public class VocabularyMongoServerImpl implements VocabularyMongoServer {
 
 	private Mongo mongoServer;
 	private String databaseName;
+	private String username;
+	private String password;
 	private Datastore datastore;
 
 	/* (non-Javadoc)
@@ -60,10 +62,12 @@ public class VocabularyMongoServerImpl implements VocabularyMongoServer {
 		mongoServer.close();
 	}
 
-	public VocabularyMongoServerImpl(Mongo mongoServer, String databaseName) {
+	public VocabularyMongoServerImpl(Mongo mongoServer, String databaseName, String username, String password) {
 		log.info("VocabularyMongoServer is instantiated");
 		this.mongoServer = mongoServer;
 		this.databaseName = databaseName;
+		this.username = username;
+		this.password = password;
 		createDatastore();
 	}
 
@@ -77,8 +81,11 @@ public class VocabularyMongoServerImpl implements VocabularyMongoServer {
 	private void createDatastore() {
 		Morphia morphia = new Morphia();
 		morphia.map(ControlledVocabularyImpl.class).map(EntityImpl.class);
-
-		datastore = morphia.createDatastore(mongoServer, databaseName);
+		if(StringUtils.isNotEmpty(username)&&StringUtils.isNotEmpty(password)){
+		datastore = morphia.createDatastore(mongoServer, databaseName, username,password.toCharArray());
+		} else {
+			datastore = morphia.createDatastore(mongoServer, databaseName);
+		}
 		System.out.println(mongoServer.getAddress().getHost());
 		System.out.println(mongoServer.getAddress().getPort());
 		datastore.ensureIndexes();

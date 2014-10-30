@@ -32,7 +32,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath:cloud_config.properties</value>
-				<value>file:${EUROPEANA_PROPERTIES}</value>
+				<value>classpath:europeana.properties</value>
 			</list>
 		</property>
 	</bean> 

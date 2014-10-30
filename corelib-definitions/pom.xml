@@ -48,6 +48,8 @@
 			<version>${version.mongoDriver}</version>
 			<scope>compile</scope>
 		</dependency>
+
+		
 	</dependencies>
 	<build>
 		<plugins>
@@ -60,8 +62,44 @@
 					<target>${version.jdk}</target>
 				</configuration>
 			</plugin>
+<plugin>
+	<artifactId>maven-resources-plugin</artifactId>
+			<version>2.5</version>
+			<executions>
+				<execution>
+					<id>copy-resources</id>
+					<!-- here the phase you need -->
+					<phase>validate</phase>
+					<goals>
+						<goal>copy-resources</goal>
+					</goals>
+					<configuration>
+						<outputDirectory>${project.basedir}/src/main/resources
+						</outputDirectory>
+						<resources>
+							<resource>
+								
+								<directory>${path.properties}
+								</directory>
+								
+							</resource>
+						</resources>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
 		</plugins>
 	</build>
+
+
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<path.properties>${project.basedir.parent}/properties/test</path.properties>
+			</properties>
+		</profile>
+	</profiles>
 	<organization>
 		<name>Europeana Foundation</name>
 	</organization>

@@ -57,7 +57,7 @@ public class VocabularyMongoServerTest {
 
 		try {
 			mongodExecutable.start();
-			server = new VocabularyMongoServerImpl(new Mongo("localhost", port), "vocTest");
+			server = new VocabularyMongoServerImpl(new Mongo("localhost", port), "vocTest","","");
 			ControlledVocabularyImpl voc = new ControlledVocabularyImpl();
 			voc.setName("name");
 			voc.setLocation("location");

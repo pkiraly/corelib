@@ -55,7 +55,7 @@ public class ExtractorTest {
 
 		try {
 			mongodExecutable.start();
-			mongoServer = new VocabularyMongoServerImpl(new Mongo("localhost",port),"vocabulary_test");
+			mongoServer = new VocabularyMongoServerImpl(new Mongo("localhost",port),"vocabulary_test","","");
 			assertNotNull(mongoServer);
 			ControlledVocabularyImpl vocabulary = new ControlledVocabularyImpl(
 					"testVocabulary");
