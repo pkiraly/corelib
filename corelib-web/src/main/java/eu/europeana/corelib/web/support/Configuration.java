@@ -378,13 +378,10 @@ public class Configuration {
 	public String getPortalUrl() {
 		if (portalUrl == null) {
 			StringBuilder sb = new StringBuilder(portalServer);
-			
-			if (!portalServer.endsWith("/")){
+			if (!portalServer.endsWith("/") && !portalName.startsWith("/")) {
 				sb.append("/");
 			}
-			if(portalName!=null){
-				sb.append(portalName);
-			}
+			sb.append(portalName);
 			portalUrl = sb.toString();
 		}
 		return portalUrl;

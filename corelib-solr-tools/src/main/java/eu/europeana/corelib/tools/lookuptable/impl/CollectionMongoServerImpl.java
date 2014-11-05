@@ -38,7 +38,8 @@ public class CollectionMongoServerImpl implements MongoServer, CollectionMongoSe
 	private Mongo mongoServer;
 	private String databaseName;
 	private Datastore datastore;
-
+	private String username;
+	private String password;
 	/**
 	 * Constructor for the CollectionMongoServer to ensure that everything has
 	 * been set upon initialization
@@ -54,6 +55,14 @@ public class CollectionMongoServerImpl implements MongoServer, CollectionMongoSe
 		createDatastore();
 	}
 
+	public CollectionMongoServerImpl(Mongo mongoServer, String databaseName, String username, String password) {
+		this.mongoServer = mongoServer;
+		this.databaseName = databaseName;
+		this.username = username;
+		this.password = password;
+		createDatastore();
+	}
+	
 	public CollectionMongoServerImpl() {
 
 	}
@@ -61,7 +70,11 @@ public class CollectionMongoServerImpl implements MongoServer, CollectionMongoSe
 	private void createDatastore() {
 		Morphia morphia = new Morphia();
 		morphia.map(Collection.class);
+		if(username!=null && password!=null){
+			datastore = morphia.createDatastore(mongoServer, databaseName,username,password.toCharArray());
+		} else {
 		datastore = morphia.createDatastore(mongoServer, databaseName);
+		}
 		datastore.ensureIndexes();
 	}
 

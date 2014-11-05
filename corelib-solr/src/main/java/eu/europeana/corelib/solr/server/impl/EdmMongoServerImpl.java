@@ -81,6 +81,23 @@ public class EdmMongoServerImpl implements EdmMongoServer {
 		createDatastore();
 
 	}
+	
+	public EdmMongoServerImpl(Mongo mongoServer, String databaseName,
+			String username, String password, boolean shouldCreate) throws MongoDBException {
+		
+		log.info("EDMMongoServer is instantiated");
+		this.mongoServer = mongoServer;
+		this.mongoServer.getMongoOptions().socketKeepAlive = true;
+		this.mongoServer.getMongoOptions().autoConnectRetry = true;
+		this.mongoServer.getMongoOptions().connectionsPerHost = 10;
+		this.mongoServer.getMongoOptions().connectTimeout = 5000;
+		this.mongoServer.getMongoOptions().socketTimeout = 6000;
+		this.databaseName = databaseName;
+		this.username = username;
+		this.password = password;
+		//createDatastore();
+
+	}
 
 	@Override
 	public void setEuropeanaIdMongoServer(
@@ -109,13 +126,10 @@ public class EdmMongoServerImpl implements EdmMongoServer {
 		morphia.map(PhysicalThingImpl.class);
 		morphia.map(ConceptSchemeImpl.class);
 		morphia.map(BasicProxyImpl.class);
-
-		datastore = morphia.createDatastore(mongoServer, databaseName);
-
-		if (StringUtils.isNotBlank(this.username)
-				&& StringUtils.isNotBlank(this.password)) {
-			datastore.getDB().authenticate(this.username,
-					this.password.toCharArray());
+		if(username!=null && password!=null){
+			datastore = morphia.createDatastore(mongoServer, databaseName, username, password.toCharArray());
+		} else {
+			datastore = morphia.createDatastore(mongoServer, databaseName);
 		}
 		datastore.ensureIndexes();
 		log.info("EDMMongoServer datastore is created");

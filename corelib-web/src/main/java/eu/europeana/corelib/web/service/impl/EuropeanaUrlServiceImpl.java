@@ -102,7 +102,7 @@ public class EuropeanaUrlServiceImpl implements EuropeanaUrlService {
 		} else {
 			url = new UrlBuilder(configuration.getPortalServer());
 		}
-		url.addPath(configuration.getPortalName());
+		//url.addPath(configuration.getPortalName());
 		return url;
 	}
 

@@ -74,13 +74,13 @@ public class EuropeanaIdMongoServerImpl implements MongoServer, EuropeanaIdMongo
 	public void createDatastore() {
 		Morphia morphia = new Morphia();
 		morphia.map(EuropeanaId.class);
+		if(username!=null && password!=null){
+			datastore = morphia.createDatastore(mongoServer, databaseName,username,password.toCharArray());
+		} else {
 		datastore = morphia.createDatastore(mongoServer, databaseName);
-		datastore.ensureIndexes();
-		if (StringUtils.isNotBlank(this.username)
-				&& StringUtils.isNotBlank(this.password)) {
-			datastore.getDB().authenticate(this.username,
-					this.password.toCharArray());
 		}
+		datastore.ensureIndexes();
+		
 	}
 
 	/**

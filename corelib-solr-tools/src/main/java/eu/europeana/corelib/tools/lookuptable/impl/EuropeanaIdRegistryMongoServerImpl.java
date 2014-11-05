@@ -57,7 +57,8 @@ public class EuropeanaIdRegistryMongoServerImpl implements MongoServer, European
     private final static String XMLCHECKSUM = "xmlchecksum";
     private final static String ISDELETED = "deleted";
     private EuropeanaIdMongoServer europeanaIdMongoServer;
-
+    private String username;
+    private String password;
     /**
      * Constructor of the EuropeanaIDRegistryMongoServer
      *
@@ -67,16 +68,19 @@ public class EuropeanaIdRegistryMongoServerImpl implements MongoServer, European
     public EuropeanaIdRegistryMongoServerImpl(Mongo mongoServer, String databaseName) {
         this.mongoServer = mongoServer;
         this.databaseName = databaseName;
+        
         europeanaIdMongoServer = new EuropeanaIdMongoServerImpl(mongoServer,
-                databaseName, "", "");
+                databaseName, username, password);
         createDatastore();
     }
 
     public EuropeanaIdRegistryMongoServerImpl(Mongo mongoServer, String databaseName, String username, String password) {
         this.mongoServer = mongoServer;
         this.databaseName = databaseName;
+        this.username = username;
+        this.password = password;
         europeanaIdMongoServer = new EuropeanaIdMongoServerImpl(mongoServer,
-                databaseName, "", "");
+                databaseName, username, password);
     }
     /* (non-Javadoc)
      * @see eu.europeana.corelib.tools.lookuptable.impl.EuropeanaIdRegistryMongoServer#getEuropeanaIdMongoServer()
@@ -92,8 +96,11 @@ public class EuropeanaIdRegistryMongoServerImpl implements MongoServer, European
 
         morphia.map(EuropeanaIdRegistry.class);
         morphia.map(FailedRecord.class);
+        if(username!=null && password!=null){
+        datastore = morphia.createDatastore(mongoServer, databaseName,username,password.toCharArray());
+        } else {
         datastore = morphia.createDatastore(mongoServer, databaseName);
-
+        }
         datastore.ensureIndexes();
     }
 
