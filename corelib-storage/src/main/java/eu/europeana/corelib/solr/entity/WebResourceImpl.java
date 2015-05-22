@@ -16,12 +16,10 @@
  */
 package eu.europeana.corelib.solr.entity;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import eu.europeana.corelib.definitions.edm.model.metainfo.ImageMetaInfo;
 import eu.europeana.corelib.definitions.edm.model.metainfo.WebResourceMetaInfo;
 import eu.europeana.corelib.edm.model.metainfo.WebResourceMetaInfoImpl;
 import org.bson.types.ObjectId;
@@ -45,7 +43,7 @@ import eu.europeana.corelib.definitions.model.Orientation;
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
 @Entity("WebResource")
-public class WebResourceImpl implements WebResource {
+public class WebResourceImpl implements WebResource  {
 
 	@Id
 	private ObjectId id = new ObjectId();

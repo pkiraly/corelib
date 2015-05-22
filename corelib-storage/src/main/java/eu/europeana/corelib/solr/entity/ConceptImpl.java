@@ -35,7 +35,7 @@ import eu.europeana.corelib.utils.StringArrayUtils;
  */
 @JsonSerialize(include = Inclusion.NON_EMPTY)
 @Entity("Concept")
-public class ConceptImpl extends ContextualClassImpl implements Concept {
+public class ConceptImpl extends ContextualClassImpl implements Concept{
 
 	private String[] broader;
 	private String[] narrower;

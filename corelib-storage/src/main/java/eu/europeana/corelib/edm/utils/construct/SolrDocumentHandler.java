@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -34,6 +33,7 @@ import eu.europeana.corelib.solr.entity.LicenseImpl;
 import eu.europeana.publication.common.ICollection;
 import eu.europeana.publication.common.IDocument;
 import eu.europeana.publication.common.State;
+import org.apache.solr.client.solrj.SolrServer;
 
 /**
  * Class that converts a FullBean to a SolrInputDocument and saves it
@@ -41,7 +41,7 @@ import eu.europeana.publication.common.State;
  * @author Yorgos.Mamakis@ europeana.eu
  */
 public class SolrDocumentHandler implements ICollection {
-	private HttpSolrServer solrServer;
+	private SolrServer solrServer;
 	/*
 	 * <field name="is_fulltext" type="boolean" indexed="true" stored="true"
 	 * multiValued="false"/> <field name="has_thumbnails" type="boolean"
@@ -66,7 +66,7 @@ public class SolrDocumentHandler implements ICollection {
 		}
 	};
 
-	public SolrDocumentHandler(HttpSolrServer solrServer) {
+	public SolrDocumentHandler(SolrServer solrServer) {
 		this.solrServer = solrServer;
 	}
 
@@ -166,7 +166,7 @@ public class SolrDocumentHandler implements ICollection {
 			throws SolrServerException {
 		ModifiableSolrParams params = new ModifiableSolrParams();
 		params.add("q", "europeana_id:"+ClientUtils.escapeQueryChars(about));
-
+                
 		SolrDocumentList resultList = solrServer.query(params).getResults();
 		if (resultList != null && resultList.size() > 0) {
 			SolrDocument retrievedDocument = resultList.get(0);

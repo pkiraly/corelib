@@ -9,7 +9,7 @@ import eu.europeana.corelib.definitions.edm.entity.PhysicalThing;
 import eu.europeana.corelib.utils.StringArrayUtils;
 
 @Entity("PhysicalThing")
-public class PhysicalThingImpl extends AbstractEdmEntityImpl implements PhysicalThing {
+public class PhysicalThingImpl extends AbstractEdmEntityImpl implements PhysicalThing{
 
 	private Map<String,List<String>> dcContributor;
 	private Map<String,List<String>> dcCoverage;
