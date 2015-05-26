@@ -717,7 +717,7 @@ public final class AggregationFieldInput {
 	}
 
 	/**
-	 * Create an Aggregation MongoDBEntity. The webresources are not inserted at
+	 * Create an Aggregation MongoDBEntity. The webresources are inserted at
 	 * this method. as the aggregation may be created before the web resources
 	 * are encountered in the EDM parsing or after.
 	 *
