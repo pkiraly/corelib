@@ -13,7 +13,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.CloudSolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
@@ -41,7 +43,7 @@ import eu.europeana.publication.common.State;
  * @author Yorgos.Mamakis@ europeana.eu
  */
 public class SolrDocumentHandler implements ICollection {
-	private HttpSolrServer solrServer;
+	private SolrServer solrServer;
 	/*
 	 * <field name="is_fulltext" type="boolean" indexed="true" stored="true"
 	 * multiValued="false"/> <field name="has_thumbnails" type="boolean"
@@ -66,7 +68,7 @@ public class SolrDocumentHandler implements ICollection {
 		}
 	};
 
-	public SolrDocumentHandler(HttpSolrServer solrServer) {
+	public SolrDocumentHandler(SolrServer solrServer) {
 		this.solrServer = solrServer;
 	}
 
