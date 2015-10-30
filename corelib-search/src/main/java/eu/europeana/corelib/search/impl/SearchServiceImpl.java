@@ -320,7 +320,7 @@ public class SearchServiceImpl implements SearchService {
        // long t0 = new Date().getTime();
 
         FullBean fullBean = mongoServer.getFullBean(europeanaObjectId);
-        injectWebMetaInfo(fullBean);
+       // injectWebMetaInfo(fullBean);
 
         if (fullBean != null && isHierarchy(fullBean.getAbout())) {
             for (Proxy prx : fullBean.getProxies()) {
