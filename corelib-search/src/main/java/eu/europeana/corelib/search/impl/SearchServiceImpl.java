@@ -374,7 +374,7 @@ public class SearchServiceImpl implements SearchService {
         }
         mongoServer.setEuropeanaIdMongoServer(idServer);
         FullBean fullBean = mongoServer.resolve(europeanaObjectId);
-        injectWebMetaInfo(fullBean);
+        //injectWebMetaInfo(fullBean);
       //  logTime("mongo resolve", (new Date().getTime() - t0));
         if (fullBean != null) {
             try {
@@ -1160,7 +1160,7 @@ public class SearchServiceImpl implements SearchService {
         if (cursor.hasNext()) {
             return new Gson().fromJson(cursor.next().toString(), type);
         }
-
+        cursor.close();
         return null;
     }
 }
