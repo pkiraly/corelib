@@ -77,6 +77,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.apache.solr.client.solrj.response.SpellCheckResponse.Collation;
 import org.apache.solr.client.solrj.response.SpellCheckResponse.Correction;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrException;
 import org.apache.solr.common.params.CursorMarkParams;
@@ -458,7 +459,7 @@ public class SearchServiceImpl implements SearchService {
             for (MoreLikeThis mltField : MoreLikeThis.values()) {
                 fields.add(mltField.toString());
             }
-            mltFields = StringUtils.join(fields, ",");
+            mltFields = ClientUtils.escapeQueryChars(StringUtils.join(fields, ","));
         }
         solrQuery.set("mlt.fl", mltFields);
         solrQuery.set("mlt.mintf", 1);
