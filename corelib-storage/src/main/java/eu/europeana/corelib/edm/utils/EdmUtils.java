@@ -306,7 +306,13 @@ public class EdmUtils {
                 if (StringUtils.equals("and", countryWord)) {
                     sb.append(countryWord);
                 } else {
-                    sb.append(StringUtils.capitalize(countryWord));
+                    //In order to enable Vatican City being properly generated we need to remove the initial ( before the
+                    //capitalization
+                    if (StringUtils.startsWith(countryWord,"(")){
+                        sb.append("("+StringUtils.capitalize(StringUtils.substringAfter(countryWord,"(")));
+                    } else {
+                        sb.append(StringUtils.capitalize(countryWord));
+                    }
                 }
                 sb.append(SPACE);
             }
