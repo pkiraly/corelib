@@ -545,7 +545,7 @@ public final class MongoUtils {
 			Map<String, String> updatedValues = (Map<String, String>) getter
 					.invoke(updated);
 
-			if (updatedValues != null) {
+			if (updatedValues != null && updatedValues.size()>0) {
 				if (savedValues == null
 						|| !MongoUtils.mapRefEquals(updatedValues, savedValues)) {
 					ops.set(updateField, updatedValues);
@@ -596,7 +596,7 @@ public final class MongoUtils {
 			Map<String, List<String>> updatedValues = (Map<String, List<String>>) getter
 					.invoke(updated);
 
-			if (updatedValues != null) {
+			if (updatedValues != null&&updatedValues.size()>0) {
 				if (savedValues == null
 						|| !MongoUtils.mapEquals(updatedValues, savedValues)) {
 					ops.set(updateField, updatedValues);

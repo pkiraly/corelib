@@ -381,7 +381,9 @@ public final class SolrUtils {
 				}
 				}
 				values.addAll(normalized);
-				doc.setField(edmLabel.toString() + "." + key, values);
+				if(normalized.size()>0) {
+					doc.setField(edmLabel.toString() + "." + key, values);
+				}
 			}
 		}
 		return doc;
