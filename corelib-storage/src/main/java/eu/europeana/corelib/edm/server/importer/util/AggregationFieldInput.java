@@ -345,12 +345,13 @@ public final class AggregationFieldInput {
 				webResource.setDcCreator(MongoUtils
 						.createResourceOrLiteralMapFromList(wResourceType
 								.getCreatorList()));
-                if(wResourceType.getDescribedby()!=null){
-                    webResource.setWdrsDescribedBy(wResourceType.getDescribedby().getResource());
-                }
+
                 if(wResourceType.getHasServiceList()!=null){
                     webResource.setSvcsHasService(SolrUtils.resourceListToArray(wResourceType.getHasServiceList()));
                 }
+				if(wResourceType.getIsReferencedByList()!=null){
+					webResource.setDctermsIsReferencedBy(SolrUtils.resourceOrLiteralListToArray(wResourceType.getIsReferencedByList()));
+				}
                 if(wResourceType.getPreview()!=null){
                     webResource.setEdmPreview(wResourceType.getPreview().getResource());
                 }
@@ -768,7 +769,17 @@ public final class AggregationFieldInput {
 				(aggregation.getIsShownAt())).getResource();
 		mongoAggregation.setEdmIsShownAt(isShownAt != null ? isShownAt.trim()
 				: null);
-		
+		boolean containsIsShownAt = false;
+		for(WebResourceImpl wr:webResources){
+			if(StringUtils.equals(wr.getAbout(),isShownAt)){
+				containsIsShownAt = true;
+			}
+		}
+		if(!containsIsShownAt && isShownAt!=null){
+			WebResourceImpl wr = new WebResourceImpl();
+			wr.setAbout(isShownAt);
+			webResources.add(wr);
+		}
 		String isShownBy = SolrUtils.exists(IsShownBy.class,
 				(aggregation.getIsShownBy())).getResource();
 		mongoAggregation.setEdmIsShownBy(isShownBy != null ? isShownBy.trim()

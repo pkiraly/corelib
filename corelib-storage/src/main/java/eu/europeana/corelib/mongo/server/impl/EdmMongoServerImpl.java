@@ -17,35 +17,21 @@
 
 package eu.europeana.corelib.mongo.server.impl;
 
-import java.util.logging.Logger;
-
-import org.apache.commons.lang.StringUtils;
-
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.mapping.MappingException;
 import com.mongodb.Mongo;
-
 import eu.europeana.corelib.definitions.edm.beans.FullBean;
 import eu.europeana.corelib.definitions.exception.ProblemType;
 import eu.europeana.corelib.edm.exceptions.MongoDBException;
 import eu.europeana.corelib.mongo.server.EdmMongoServer;
 import eu.europeana.corelib.solr.bean.impl.FullBeanImpl;
-import eu.europeana.corelib.solr.entity.AgentImpl;
-import eu.europeana.corelib.solr.entity.AggregationImpl;
-import eu.europeana.corelib.solr.entity.BasicProxyImpl;
-import eu.europeana.corelib.solr.entity.ConceptImpl;
-import eu.europeana.corelib.solr.entity.ConceptSchemeImpl;
-import eu.europeana.corelib.solr.entity.EuropeanaAggregationImpl;
-import eu.europeana.corelib.solr.entity.EventImpl;
-import eu.europeana.corelib.solr.entity.PhysicalThingImpl;
-import eu.europeana.corelib.solr.entity.PlaceImpl;
-import eu.europeana.corelib.solr.entity.ProvidedCHOImpl;
-import eu.europeana.corelib.solr.entity.ProxyImpl;
-import eu.europeana.corelib.solr.entity.TimespanImpl;
-import eu.europeana.corelib.solr.entity.WebResourceImpl;
+import eu.europeana.corelib.solr.entity.*;
 import eu.europeana.corelib.tools.lookuptable.EuropeanaId;
 import eu.europeana.corelib.tools.lookuptable.EuropeanaIdMongoServer;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.logging.Logger;
 
 /**
  * @see eu.europeana.corelib.mongo.server.EdmMongoServer
@@ -61,6 +47,7 @@ public class EdmMongoServerImpl implements EdmMongoServer {
 	private String username;
 	private String password;
 	private Datastore datastore;
+	private Morphia morphia;
 	EuropeanaIdMongoServer europeanaIdMongoServer;
 	private final static String RESOLVE_PREFIX = "http://www.europeana.eu/resolve/record";
 	private final static String PORTAL_PREFIX = "http://www.europeana.eu/portal/record";
@@ -91,7 +78,7 @@ public class EdmMongoServerImpl implements EdmMongoServer {
 	}
 
 	private void createDatastore() {
-		Morphia morphia = new Morphia();
+		morphia = new Morphia();
 
 		morphia.map(FullBeanImpl.class);
 		morphia.map(ProvidedCHOImpl.class);
@@ -146,8 +133,9 @@ public class EdmMongoServerImpl implements EdmMongoServer {
 				.retrieveEuropeanaIdFromOld(id);
 		if (newId != null) {
 			europeanaIdMongoServer.updateTime(newId.getNewId(), id);
-			return datastore.find(FullBeanImpl.class)
+			FullBeanImpl fBean = datastore.find(FullBeanImpl.class)
 					.field("about").equal(newId.getNewId()).get();
+			return fBean;
 		}
 
 		newId = europeanaIdMongoServer
