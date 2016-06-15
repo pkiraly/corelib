@@ -41,6 +41,7 @@ import eu.europeana.corelib.search.SearchService;
 import eu.europeana.corelib.web.exception.EmailServiceException;
 import eu.europeana.corelib.web.service.EmailService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -54,7 +55,8 @@ import static eu.europeana.corelib.db.util.UserUtils.hashPassword;
  * @see eu.europeana.corelib.db.service.UserService
  * @see eu.europeana.corelib.db.entity.relational.UserImpl
  */
-@Transactional
+//@Transactional
+//@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class UserServiceImpl extends AbstractServiceImpl<User> implements
         UserService {
 
@@ -67,6 +69,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements
     @Resource(name = "corelib_web_emailService")
     private EmailService emailService;
 
+//    @Transactional
     @Override
     public User create(
             String email, String username, String password, String company, String country, String firstName,
@@ -114,6 +117,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements
         return user;
     }
 
+//    @Transactional
     @Override
     public Token activate(String email, String tokenString) throws DatabaseException {
         Token token = tokenService.findByID(tokenString);
@@ -134,6 +138,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements
         return token;
     }
 
+//    @Transactional
     @Override
     public User sendResetPasswordToken(String email, String redirect, String activationUrl) throws DatabaseException, EmailServiceException {
         if (StringUtils.isBlank(email)) {
@@ -158,6 +163,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements
         return token.getRedirect();
     }
 
+//    @Transactional
     @Override
     public User resetPassword(String email, String tokenString, String newPassword) throws DatabaseException, EmailServiceException  {
         if (StringUtils.isBlank(email) || StringUtils.isBlank(tokenString) || StringUtils.isBlank(newPassword)) {

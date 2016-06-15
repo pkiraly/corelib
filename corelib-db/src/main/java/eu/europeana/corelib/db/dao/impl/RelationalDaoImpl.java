@@ -27,6 +27,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import eu.europeana.corelib.db.dao.RelationalDao;
 import eu.europeana.corelib.db.exception.DatabaseException;
@@ -37,10 +41,15 @@ import eu.europeana.corelib.definitions.exception.ProblemType;
  * @author Willem-Jan Boogerd <www.eledge.net/contact>
  * @see eu.europeana.corelib.db.dao.RelationalDao
  */
-//@Transactional
+
+//@Service
+//@Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class RelationalDaoImpl<E extends IdentifiedEntity<?>> implements RelationalDao<E> {
 
-    @PersistenceContext(name = "corelib_db_entityManagerFactory")
+//    @PersistenceContext(name = "corelib_db_entityManagerFactory")
+
+    @PersistenceContext(type = PersistenceContextType.TRANSACTION, name = "corelib_db_entityManagerFactory")
+
     private EntityManager entityManager;
 
     private Class<E> domainClazz = null;
@@ -166,17 +175,20 @@ public class RelationalDaoImpl<E extends IdentifiedEntity<?>> implements Relatio
     }
 
     @Override
+    @Transactional
     public <T extends IdentifiedEntity<?>> T insert(T entity) {
         entityManager.persist(entity);
         return entity;
     }
 
     @Override
+    @Transactional
     public <T extends IdentifiedEntity<?>> T update(T entity) {
         return entityManager.merge(entity);
     }
 
     @Override
+    @Transactional
     public void delete(IdentifiedEntity<?> entity) {
         entityManager.remove(entity);
     }

@@ -40,6 +40,8 @@
 
 	<context:annotation-config/>
 
+	<context:component-scan base-package="eu.europeana.api2.config" />
+	
 	<bean id="corelib_db_tokenService" class="eu.europeana.corelib.db.service.impl.TokenServiceImpl"
 		p:dao-ref="corelib_db_tokenDao"/>
 	<bean id="corelib_db_userService" class="eu.europeana.corelib.db.service.impl.UserServiceImpl"
@@ -48,7 +50,6 @@
 		p:dao-ref="corelib_db_apiKeyDao"/>
 	<bean id="corelib_db_apiLogService" class="eu.europeana.corelib.db.service.impl.ApiLogServiceImpl"
 		p:dao-ref="corelib_db_apiLogDao"/>
-	<bean id="corelib_db_oAuth2TokenService" class="eu.europeana.corelib.db.service.impl.OAuth2TokenServiceImpl"
-		/>
+	<bean id="corelib_db_oAuth2TokenService" class="eu.europeana.corelib.db.service.impl.OAuth2TokenServiceImpl" />
 
 </beans>
